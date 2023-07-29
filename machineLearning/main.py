@@ -69,7 +69,7 @@ def displayImageMatrix(npMat):
     plot.show()
 
     
-def displayImageVector(vec, width):
+def displayDataVector(vec, width):
     mat = reconstructImageMatrix(vec, width)
     displayImageMatrix(mat)
 
@@ -79,7 +79,7 @@ def displayExamples(pairs, width=8):
     for label, examples in enumerate(byLabel):
         if len(examples) > 0:
             print("An Incorrect {}".format(label))
-            displayImageVector(examples[0])
+            displayDataVector(examples[0], width)
 
             
 if __name__ == "__main__":
