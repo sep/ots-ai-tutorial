@@ -63,15 +63,23 @@ def reconstructImageMatrix(vector, width):
     return np.array(result)
 
 
+def displayImageMatrix(npMat):
+    plot.gray()
+    plot.matshow(npMat)
+    plot.show()
+
+    
+def displayImageVector(vec, width):
+    mat = reconstructImageMatrix(vec, width)
+    displayImageMatrix(mat)
+
+
 def displayExamples(pairs, width=8):
     byLabel = binResults(pairs)
     for label, examples in enumerate(byLabel):
         if len(examples) > 0:
-            relevant = reconstructImageMatrix(examples[0], width)
             print("An Incorrect {}".format(label))
-            plot.gray()
-            plot.matshow(relevant)
-            plot.show()
+            displayImageVector(examples[0])
 
             
 if __name__ == "__main__":
@@ -82,5 +90,3 @@ if __name__ == "__main__":
     results = evaluateLearners(learners, dataDict)
     print(results[0]['accuracy'])
     displayExamples(results[0]['wrong'])
-
-    
