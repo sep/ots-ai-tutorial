@@ -28,13 +28,6 @@ def evaluateLearner(learner, dataDict):
     }
 
 
-def binResults(pairList):
-    results = [ [], [], [], [], [], [], [], [], [], [], [] ]
-    for label, data in pairList:
-        results[label].append(data)
-    return results
-
-
 def evaluateLearners(learners, dataDict):
     return list(map(lambda learner: evaluateLearner(learner, dataDict), learners))
 
@@ -47,6 +40,13 @@ def splitData(data, labels, testSize):
         'testData' : dataTest,
         'testLabels' : labelTest
     }
+
+
+def binResults(pairList):
+    results = [ [], [], [], [], [], [], [], [], [], [], [] ]
+    for label, data in pairList:
+        results[label].append(data)
+    return results
 
 
 def reconstructImageMatrix(vector, width):
