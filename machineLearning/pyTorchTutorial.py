@@ -65,20 +65,22 @@ def evaluate(model, testLoader, epoch=-1):
     print("Epoch %d: model accuracy %.2f%%" % (epoch, acc * 100))
 
 
-def train(model, lossFunction, optimizer, trainLoader, testLoader, numEpochs=2):
+def trainIteration(model, lossFunction, optimizer, trainLoader):
+    for inputs, labels in trainLoader:
+        predictions = model(inputs)
+        loss = lossFunction(predictions, labels)
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
+    
+def trainModel(model, lossFunction, optimizer, trainLoader, testLoader, numEpochs=2):
     for epoch in range(numEpochs):
         print("Training epoch", epoch + 1)
-        for inputs, labels in trainLoader:
-            # forward, backward, and then weight update
-            predictions = model(inputs)
-            loss = lossFunction(predictions, labels)
-            optimizer.zero_grad()
-            loss.backward()
-            optimizer.step()
+        trainIteration(model, lossFunction, optimizer, trainLoader)
         evaluate(model, testLoader, epoch=epoch)
-    
-    
-    
+
+
 if __name__ == "__main__":
     transform = transforms.Compose([
         transforms.ToTensor(),
@@ -97,5 +99,5 @@ if __name__ == "__main__":
     lossFunction = nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
  
-    train(model, lossFunction, optimizer, trainLoader, testLoader)
+    trainModel(model, lossFunction, optimizer, trainLoader, testLoader)
  
