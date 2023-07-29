@@ -4,7 +4,7 @@ import torch
 from torch import nn
 from torchvision import datasets, transforms
 
-# This might be equivalent to nn.Sequential
+# TODO: This might be equivalent to nn.Sequential, if so, replace?
 class TutorialModel(nn.Module):
     def __init__(self):
         super().__init__()
@@ -46,6 +46,7 @@ class TutorialModel(nn.Module):
         ]
         return self.chain(x, chain)
 
+    
 def displayBatch(batch):
     images, labels = batch
     plot.imshow(images[0].numpy().squeeze(), cmap='gray_r');
@@ -93,10 +94,8 @@ if __name__ == "__main__":
         break
 
     model = TutorialModel()
-    loss_fn = nn.CrossEntropyLoss()
+    lossFunction = nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
  
-    train(model, loss_fn, optimizer, trainLoader, testLoader)
- 
-
+    train(model, lossFunction, optimizer, trainLoader, testLoader)
  
