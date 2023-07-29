@@ -89,9 +89,9 @@ if __name__ == "__main__":
     trainLoader = torch.utils.data.DataLoader(trainingSet, batch_size=64, shuffle=True)
     testLoader = torch.utils.data.DataLoader(testSet, batch_size=64, shuffle=True)
 
-    for chunk in trainLoader:
-        displayBatch(chunk)
-        break
+#    for chunk in trainLoader:
+#        displayBatch(chunk)
+#        break
 
     model = TutorialModel()
     lossFunction = nn.CrossEntropyLoss()
