@@ -65,13 +65,13 @@ def evaluate(model, testLoader, epoch=-1):
     print("Epoch %d: model accuracy %.2f%%" % (epoch, acc * 100))
 
 
-def train(model, loss, optimizer, trainLoader, testLoader, numEpochs=2):
+def train(model, lossFunction, optimizer, trainLoader, testLoader, numEpochs=2):
     for epoch in range(numEpochs):
         print("Training epoch", epoch + 1)
         for inputs, labels in trainLoader:
             # forward, backward, and then weight update
             predictions = model(inputs)
-            loss = loss_fn(predictions, labels)
+            loss = lossFunction(predictions, labels)
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
