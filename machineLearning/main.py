@@ -16,9 +16,9 @@ def evaluateLearner(learner, dataDict):
     predictions = learner.predict(dataDict['testData'])
     for prediction, data, label in zip(predictions, dataDict['testData'], dataDict['testLabels']):
         if prediction == label:
-            right.append((prediction, data))
+            right.append((prediction, label, data))
         else:
-            wrong.append((prediction, data))
+            wrong.append((prediction, label, data))
     total = float(len(right) + len(wrong))
     accuracy = len(right) / total
     return {
@@ -44,8 +44,8 @@ def splitData(data, labels, testSize):
 
 def binResults(pairList):
     results = [ [], [], [], [], [], [], [], [], [], [], [] ]
-    for label, data in pairList:
-        results[label].append(data)
+    for label, actual, data in pairList:
+        results[label].append((actual,data))
     return results
 
 
@@ -78,8 +78,9 @@ def displayExamples(pairs, width=8):
     byLabel = binResults(pairs)
     for label, examples in enumerate(byLabel):
         if len(examples) > 0:
-            print("An Incorrect {}".format(label))
-            displayDataVector(examples[0], width)
+            actual, data = examples[0]
+            print("Classified a {} as a {}".format(actual, label))
+            displayDataVector(data, width)
 
             
 if __name__ == "__main__":
