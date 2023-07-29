@@ -21,7 +21,7 @@ class TutorialModel(nn.Module):
         self.act3 = nn.ReLU()
         self.drop3 = nn.Dropout(0.5)
  
-        self.fc4 = nn.Linear(64, 64)
+        self.fc4 = nn.Linear(64, 10)
 
     def chain(self,arg, functions):
         intermediate = arg
