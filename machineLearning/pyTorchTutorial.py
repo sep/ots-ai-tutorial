@@ -4,6 +4,7 @@ import torch
 from torch import nn
 from torchvision import datasets, transforms
 
+# This might be equivalent to nn.Sequential
 class TutorialModel(nn.Module):
     def __init__(self):
         super().__init__()
@@ -56,8 +57,8 @@ def evaluate(model, testLoader, epoch=-1):
     acc = 0
     count = 0
     for inputs, labels in testLoader:
-        prediction = model(inputs)
-        acc += (torch.argmax(prediction, 1) == labels).float().sum()
+        predictions = model(inputs)
+        acc += (torch.argmax(predictions, 1) == labels).float().sum()
         count += len(labels)
     acc /= count
     print("Epoch %d: model accuracy %.2f%%" % (epoch, acc * 100))
@@ -68,8 +69,8 @@ def train(model, loss, optimizer, trainLoader, testLoader, numEpochs=2):
         print("Training epoch", epoch + 1)
         for inputs, labels in trainLoader:
             # forward, backward, and then weight update
-            y_pred = model(inputs)
-            loss = loss_fn(y_pred, labels)
+            predictions = model(inputs)
+            loss = loss_fn(predictions, labels)
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
