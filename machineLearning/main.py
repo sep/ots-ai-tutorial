@@ -2,6 +2,7 @@ from sklearn.datasets import load_digits
 from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plot
+import numpy as np
 
 def trainLearners(learners, dataDict):
     for learner in learners:
@@ -27,6 +28,13 @@ def evaluateLearner(learner, dataDict):
     }
 
 
+def binResults(pairList):
+    results = [ [], [], [], [], [], [], [], [], [], [], [] ]
+    for label, data in pairList:
+        results[label].append(data)
+    return results
+
+
 def evaluateLearners(learners, dataDict):
     return list(map(lambda learner: evaluateLearner(learner, dataDict), learners))
 
@@ -39,8 +47,33 @@ def splitData(data, labels, testSize):
         'testData' : dataTest,
         'testLabels' : labelTest
     }
-    
 
+
+def reconstructImageMatrix(vector, width):
+    result = []
+    current = []
+    count = 0
+    for el in vector:
+        current.append(el)
+        count += 1
+        if count == width:
+            result.append(current)
+            current = []
+            count = 0
+    return np.array(result)
+
+
+def displayExamples(pairs, width=8):
+    byLabel = binResults(pairs)
+    for label, examples in enumerate(byLabel):
+        if len(examples) > 0:
+            relevant = reconstructImageMatrix(examples[0], width)
+            print("An Incorrect {}".format(label))
+            plot.gray()
+            plot.matshow(relevant)
+            plot.show()
+
+            
 if __name__ == "__main__":
     digits = load_digits()
     dataDict = splitData(digits.data, digits.target, 0.1)
@@ -48,9 +81,6 @@ if __name__ == "__main__":
     trainLearners(learners, dataDict)
     results = evaluateLearners(learners, dataDict)
     print(results[0]['accuracy'])
-    
-    # print(digits.data.shape)
-    # plot.gray()
-    # plot.matshow(digits.images[0])
-    # plot.show()
+    displayExamples(results[0]['wrong'])
+
     
