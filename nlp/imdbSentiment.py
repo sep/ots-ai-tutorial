@@ -1,5 +1,6 @@
-from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from nltk import tokenize
+from sklearn.neural_network import MLPClassifier
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import os
 from pathlib import Path
 
@@ -108,9 +109,55 @@ def computeAccuracy(resultsDict):
     }
 
 
-if __name__ == "__main__":
+def bareVADER():
     testPaths = getInstanceList(testDataDir)
     trainPaths = getInstanceList(trainDataDir)
     predictions = analyzeInstances(testPaths)
     accuracy = computeAccuracy(predictions)
     print(accuracy)
+
+
+def pad(lst, targetLength):
+    lst.extend([0] * (targetLength - len(lst)))
+
+
+def sklearnUsingVADER():
+    testPaths = getInstanceList(testDataDir)
+    trainPaths = getInstanceList(trainDataDir)
+    testScores = scoreInstances(testPaths)
+    trainScores = scoreInstances(trainPaths)
+    model = MLPClassifier()
+    maxLenVector = max(map(len, testScores["positive"]))
+    maxLenVector = max(maxLenVector, max(map(len, testScores["negative"])))
+    maxLenVector = max(maxLenVector, max(map(len, trainScores["positive"])))
+    maxLenVector = max(maxLenVector, max(map(len, trainScores["negative"])))
+    trainLabels = [POSITIVE] * len(trainScores["positive"])
+    trainLabels += [NEGATIVE] * len(trainScores["negative"])
+    testLabels = [POSITIVE] * len(testScores["positive"])
+    testLabels += [NEGATIVE] * len(testScores["negative"])
+    trainData = trainScores["positive"] + trainScores["negative"]
+    testData = testScores["positive"] + testScores["negative"]
+    for lst in trainData:
+        pad(lst, maxLenVector)
+    for lst in testData:
+        pad(lst, maxLenVector)
+    model.fit(trainData, trainLabels)
+    predictions = model.predict(testData)
+    results = {
+        "positive" : 0,
+        "negative" : 0
+    }
+    for prediction, truth in zip(predictions, testLabels):
+        if truth == POSITIVE:
+            if prediction == truth:
+                results["positive"] += 1
+        else:
+            if prediction == truth:
+                results["negative"] += 1
+    results["positive"] /= float(len(testScores["positive"]))
+    results["negative"] /= float(len(testScores["negative"]))
+    print(results)
+
+if __name__ == "__main__":
+    #bareVADER()
+    sklearnUsingVADER()
