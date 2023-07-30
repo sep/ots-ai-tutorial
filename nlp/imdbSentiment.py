@@ -24,6 +24,7 @@ def getInstanceList(instanceRoot):
         "negative" : negPaths
     }
 
+
 def isPositiveSum(compounds):
     total = sum(compounds)
     if total > 0:
@@ -32,7 +33,32 @@ def isPositiveSum(compounds):
         return NEGATIVE
 
 
-def analyzeReview(path, getReviewSentiment=isPositiveSum):
+def isPositiveCount(compounds):
+    posCount = 0
+    negCount = 0
+    for score in compounds:
+        if score > 0:
+            posCount += 1
+        elif score < 0:
+            negCount += 1
+    if posCount > negCount:
+        return POSITIVE
+    else:
+        return NEGATIVE
+
+def isPositiveExtrema(compounds):
+    mostNegative = POSITIVE
+    mostPositive = NEGATIVE
+    for score in compounds:
+        mostNegative = min(score, mostNegative)
+        mostPositive = max(score, mostPositive)
+    if mostPositive > abs(mostNegative):
+        return POSITIVE
+    else:
+        return NEGATIVE
+
+
+def analyzeReview(path, getReviewSentiment=isPositiveExtrema):
     text = Path(path).read_text()
     sentences = tokenize.sent_tokenize(text)
     sentiments = []
