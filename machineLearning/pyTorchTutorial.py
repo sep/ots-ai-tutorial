@@ -73,8 +73,8 @@ def trainIteration(model, lossFunction, optimizer, trainLoader):
 
     
 def trainModel(model, lossFunction, optimizer, trainLoader, testLoader, numEpochs=2):
-    for epoch in range(numEpochs):
-        print("Training epoch", epoch + 1)
+    for epoch in range(1,numEpochs+1):
+        print("Training epoch", epoch)
         trainIteration(model, lossFunction, optimizer, trainLoader)
         evaluate(model, testLoader, epoch=epoch)
 
