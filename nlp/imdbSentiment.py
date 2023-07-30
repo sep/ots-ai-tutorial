@@ -10,6 +10,7 @@ baseReviewDir = os.path.join(".", "data", "aclImdb")
 testDataDir = os.path.join(baseReviewDir, "test")
 trainDataDir = os.path.join(baseReviewDir, "train")
 
+
 def getChildPaths(rootDir):
     return map(lambda fname : os.path.join(rootDir, fname), os.listdir(rootDir))
 
@@ -46,6 +47,7 @@ def isPositiveCount(compounds):
     else:
         return NEGATIVE
 
+
 def isPositiveExtrema(compounds):
     mostNegative = POSITIVE
     mostPositive = NEGATIVE
@@ -58,27 +60,38 @@ def isPositiveExtrema(compounds):
         return NEGATIVE
 
 
-def analyzeReview(path, getReviewSentiment=isPositiveExtrema):
+def getTextScores(path):
     text = Path(path).read_text()
     sentences = tokenize.sent_tokenize(text)
     sentiments = []
     for sentence in sentences:
         valence = analyzer.polarity_scores(sentence)
         sentiments.append(valence["compound"])
-    sentiment = getReviewSentiment(sentiments)
-    #print(path,'\n', text, '\n', sentiment)
-    return sentiment
+    return sentiments
 
 
-def analyzeInstances(instanceDict):
+def scoreInstances(instanceDict):
     results = {
         "positive" : [],
         "negative" : []
     }
     for path in instanceDict["positive"]:
-        results["positive"].append(analyzeReview(path))
+        results["positive"].append(getTextScores(path))
     for path in instanceDict["negative"]:
-        results["negative"].append(analyzeReview(path))
+        results["negative"].append(getTextScores(path))
+    return results
+
+
+def analyzeInstances(instanceDict, predict=isPositiveExtrema):
+    results = {
+        "positive" : [],
+        "negative" : []
+    }
+    scores = scoreInstances(instanceDict)
+    for score in scores["positive"]:
+        results["positive"].append(predict(score))
+    for score in scores["negative"]:
+        results["negative"].append(predict(score))
     return results
 
 
