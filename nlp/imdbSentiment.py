@@ -1,12 +1,14 @@
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+from nltk import tokenize
 import os
 from pathlib import Path
 
 POSITIVE = 1
 NEGATIVE = -1
+analyzer = SentimentIntensityAnalyzer()
 baseReviewDir = os.path.join(".", "data", "aclImdb")
 testDataDir = os.path.join(baseReviewDir, "test")
 trainDataDir = os.path.join(baseReviewDir, "train")
-
 
 def getChildPaths(rootDir):
     return map(lambda fname : os.path.join(rootDir, fname), os.listdir(rootDir))
@@ -22,11 +24,24 @@ def getInstanceList(instanceRoot):
         "negative" : negPaths
     }
 
+def isPositiveSum(compounds):
+    total = sum(compounds)
+    if total > 0:
+        return POSITIVE
+    else:
+        return NEGATIVE
 
-def analyzeReview(path):
+
+def analyzeReview(path, getReviewSentiment=isPositiveSum):
     text = Path(path).read_text()
-    print(path,'\n', text)
-    raise "Stub"
+    sentences = tokenize.sent_tokenize(text)
+    sentiments = []
+    for sentence in sentences:
+        valence = analyzer.polarity_scores(sentence)
+        sentiments.append(valence["compound"])
+    sentiment = getReviewSentiment(sentiments)
+    #print(path,'\n', text, '\n', sentiment)
+    return sentiment
 
 
 def analyzeInstances(instanceDict):
@@ -41,7 +56,22 @@ def analyzeInstances(instanceDict):
     return results
 
 
+def computeListAccuracy(resultsList, trueSentiment):
+    total = float(len(resultsList))
+    correct = resultsList.count(trueSentiment)
+    return correct / total
+
+
+def computeAccuracy(resultsDict):
+    return {
+        "positive" : computeListAccuracy(resultsDict["positive"], POSITIVE),
+        "negative" : computeListAccuracy(resultsDict["negative"], NEGATIVE)
+    }
+
+
 if __name__ == "__main__":
     testPaths = getInstanceList(testDataDir)
     trainPaths = getInstanceList(trainDataDir)
-    analyzeInstances(testPaths)
+    predictions = analyzeInstances(testPaths)
+    accuracy = computeAccuracy(predictions)
+    print(accuracy)
