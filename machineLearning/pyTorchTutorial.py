@@ -23,15 +23,7 @@ class TutorialModel(nn.Module):
         self.drop3 = nn.Dropout(0.5)
  
         self.fc4 = nn.Linear(64, 10)
-
-    def chain(self,arg, functions):
-        intermediate = arg
-        for fn in functions:
-            intermediate = fn(intermediate)
-        return intermediate
-        
-    def forward(self, x):
-        chain = [
+        self.chain = [
             self.conv1,
             self.act1,
             self.drop1,
@@ -44,7 +36,13 @@ class TutorialModel(nn.Module):
             self.drop3,
             self.fc4
         ]
-        return self.chain(x, chain)
+
+        
+    def forward(self, x):
+        intermediate = x
+        for fn in self.chain:
+            intermediate = fn(intermediate)
+        return intermediate
 
     
 def displayBatch(batch):
