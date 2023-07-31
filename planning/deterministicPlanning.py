@@ -2,7 +2,9 @@ from pathfinding.core.diagonal_movement import DiagonalMovement
 import os
 
 MAP_ROOT= os.path.join("data", "maps")
-TEST_PATH= os.path.join(MAP_ROOT, "AR0011SR.map")
+SCENARIO_ROOT = os.path.join("data", "scenarios")
+TEST_SCEN_PATH= os.path.join(SCENARIO_ROOT, "AR0011SR.map.scen")
+TEST_MAP_PATH= os.path.join(MAP_ROOT, "AR0011SR.map")
 OCTILE_MOTION = 'type octile'
 HEIGHT = 'height'
 WIDTH = 'width'
@@ -15,6 +17,7 @@ class Map():
     def __init__(self):
         self.motionModel = None
         self.occlusion = None
+        self.name = None
 
     @staticmethod
     def loadMap(path):
@@ -67,7 +70,61 @@ class Map():
                       print ("Map has wrong height. Got {} but expected {}".format(len(grid), height))
                       raise ValueError
             newMap.occlusion = grid
+            newMap.name = os.path.basename(path)
             return newMap
+
+        
+class InstanceGenerator():
+
+    def __init__(self):
+        self.name = None
+        self.map = None
+        self.traversalDicts = []
+
+
+    @staticmethod
+    def mapPathOfInstancePath(instancePath):
+        mapName = os.path.basename(instancePath)
+        mapName = mapName[:-5]
+        mapName = os.path.join("data", "maps", mapName)
+        return mapName
+
+
+    @staticmethod
+    def load(instancePath, mapPath=None):
+        if mapPath is None:
+            mapPath = InstanceGenerator.mapPathOfInstancePath(instancePath)
+        result = InstanceGenerator()
+        result.name = os.path.basename(instancePath)
+        if not os.path.basename(mapPath) in result.name:
+            print("It appears the map and instances are not aligned:", instancePath, mapPath)
+            raise ValueError
+        else:
+            result.map = Map.loadMap(mapPath)
+            with open(instancePath, 'r') as stream:
+                lines = stream.readlines()
+                lines = [line[:-1] for line in lines]
+                for targetPath in lines[1:]:
+                    pieces = targetPath.split()
+                    if not len(pieces) == 9:
+                        print("Poorly formatted scenario file. Each line should have 9 entries")
+                        raise ValueError
+                    result.traversalDicts.append({
+                        'width' : int(pieces[2]),
+                        'height' : int(pieces[3]),
+                        'start' : {
+                            'x' : int(pieces[4]),
+                            'y' : int(pieces[5]),
+                        },
+                        'goal' : {
+                            'x' : int(pieces[6]),
+                            'y' : int(pieces[7]),
+                        },
+                        'cost' : float(pieces[8])
+                    })
+                    
+        return result
+        
 
 
 def checkAllMapsLoadable(rootDir):
@@ -78,4 +135,7 @@ def checkAllMapsLoadable(rootDir):
             
 
 if __name__ == "__main__":
-    checkAllMapsLoadable(MAP_ROOT)
+    #checkAllMapsLoadable(MAP_ROOT)
+    #InstanceGenerator.load(TEST_SCEN_PATH, TEST_MAP_PATH)
+    #print(InstanceGenerator.mapPathOfInstancePath(TEST_SCEN_PATH))
+    InstanceGenerator.load(TEST_SCEN_PATH)
