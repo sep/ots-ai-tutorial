@@ -57,9 +57,9 @@ class Map():
                 lineAr = []
                 for char in mapLine:
                     if char in TRAVERSABLE:
-                      lineAr.append(False)
+                      lineAr.append(1)
                     elif char in BLOCKED:
-                      lineAr.append(True)
+                      lineAr.append(-1)
                     else:
                       print("Saw an unexpected map glyph while parsing", char)
                       raise ValueError
