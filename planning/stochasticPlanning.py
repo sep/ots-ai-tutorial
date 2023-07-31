@@ -26,7 +26,7 @@ class QLearningAgent:
         """
         self.qValues = defaultdict(lambda: np.zeros(env.action_space.n))
 
-        self.lr = learningRate
+        self.learningRate = learningRate
         self.futureDiscount = futureDiscount
         self.environment = environment
         self.epsilon = startEpsilon
@@ -66,7 +66,7 @@ class QLearningAgent:
         )
 
         self.qValues[observation][action] = (
-            self.qValues[observation][action] + self.lr * temporalDifference
+            self.qValues[observation][action] + self.learningRate * temporalDifference
         )
         self.errors.append(temporalDifference)
 
