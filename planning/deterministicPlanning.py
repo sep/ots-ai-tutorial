@@ -1,5 +1,6 @@
 from pathfinding.core.diagonal_movement import DiagonalMovement
 import os
+import random
 
 MAP_ROOT= os.path.join("data", "maps")
 SCENARIO_ROOT = os.path.join("data", "scenarios")
@@ -18,7 +19,7 @@ class Map():
         self.motionModel = None
         self.occlusion = None
         self.name = None
-
+        
     @staticmethod
     def loadMap(path):
         with open(path, 'r') as stream:
@@ -73,7 +74,15 @@ class Map():
             newMap.name = os.path.basename(path)
             return newMap
 
-        
+
+class Instance():
+    def __init__(self, map, start, goal, knownCost=None):
+        self.map = map
+        self.start = start
+        self.goal = goal
+        self.optimalCost = knownCost
+
+
 class InstanceGenerator():
 
     def __init__(self):
@@ -81,6 +90,9 @@ class InstanceGenerator():
         self.map = None
         self.traversalDicts = []
 
+    def randomInstance(self):
+        traversal = random.choice(self.traversalDicts)
+        return Instance(self.map, traversal["start"], traversal["goal"], traversal["cost"])
 
     @staticmethod
     def mapPathOfInstancePath(instancePath):
@@ -141,4 +153,7 @@ def checkAllScenariosLoadable(rootDir):
             
 
 if __name__ == "__main__":
-    checkAllScenariosLoadable(SCENARIO_ROOT)
+    #checkAllScenariosLoadable(SCENARIO_ROOT)
+    testGenerator = InstanceGenerator.load(TEST_SCEN_PATH)
+    instance = testGenerator.randomInstance()
+    print(instance.start, instance.goal, instance.map.name)
