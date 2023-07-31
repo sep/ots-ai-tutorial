@@ -98,6 +98,8 @@ class Instance():
             print("Map goaling location is not traversable:", self.goalX, self.goalY)
             raise ValueError
         solver = AStarFinder(diagonal_movement=self.map.motionModel)
+        # We're doing this because the solver uses object equality
+        # rather than overriding __eq__, as their demo code suggests
         startNode = self.map.occlusion.nodes[self.startY][self.startX]
         goalNode = self.map.occlusion.nodes[self.goalY][self.goalX]
         path, runs = solver.find_path(startNode, goalNode, self.map.occlusion)
