@@ -126,16 +126,19 @@ class InstanceGenerator():
         return result
         
 
-
 def checkAllMapsLoadable(rootDir):
     for fname in os.listdir(rootDir):
         mapPath = os.path.join(rootDir, fname)
         Map.loadMap(mapPath)
     return True
+
+
+def checkAllScenariosLoadable(rootDir):
+    for fname in os.listdir(rootDir):
+        instancePath = os.path.join(rootDir, fname)
+        InstanceGenerator.load(instancePath)
+    return True
             
 
 if __name__ == "__main__":
-    #checkAllMapsLoadable(MAP_ROOT)
-    #InstanceGenerator.load(TEST_SCEN_PATH, TEST_MAP_PATH)
-    #print(InstanceGenerator.mapPathOfInstancePath(TEST_SCEN_PATH))
-    InstanceGenerator.load(TEST_SCEN_PATH)
+    checkAllScenariosLoadable(SCENARIO_ROOT)
