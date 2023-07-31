@@ -7,8 +7,8 @@ OCTILE_MOTION = 'type octile'
 HEIGHT = 'height'
 WIDTH = 'width'
 MAP = 'map'
-FREE = '.'
-OCCLUDED = '@'
+TRAVERSABLE = ['.', 'G', 'S', 'W']
+BLOCKED = ['@', 'O']
 
 class Map():
     
@@ -52,9 +52,9 @@ class Map():
             for mapLine in lines[4:]:
                 lineAr = []
                 for char in mapLine:
-                    if char == FREE:
+                    if char in TRAVERSABLE:
                       lineAr.append(False)
-                    elif char == OCCLUDED:
+                    elif char in BLOCKED:
                       lineAr.append(True)
                     else:
                       print("Saw an unexpected map glyph while parsing", char)
