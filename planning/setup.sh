@@ -11,5 +11,8 @@ mkdir data
 pushd data
 mkdir maps
 wget https://movingai.com/benchmarks/bgmaps/bgmaps-map.zip
-unzip bgmaps-map.zip -d maps/
+unzip bgmaps-map.zip -d maps
+mkdir scenarios
+wget https://movingai.com/benchmarks/bgmaps/bgmaps-scen.zip
+unzip bgmaps-scen.zip -d scenarios
 
