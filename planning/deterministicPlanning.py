@@ -1,4 +1,5 @@
 from pathfinding.core.diagonal_movement import DiagonalMovement
+from pathfinding.core.grid import Node
 import os
 import random
 
@@ -124,14 +125,8 @@ class InstanceGenerator():
                     result.traversalDicts.append({
                         'width' : int(pieces[2]),
                         'height' : int(pieces[3]),
-                        'start' : {
-                            'x' : int(pieces[4]),
-                            'y' : int(pieces[5]),
-                        },
-                        'goal' : {
-                            'x' : int(pieces[6]),
-                            'y' : int(pieces[7]),
-                        },
+                        'start' : Node(int(pieces[4]), int(pieces[5])),
+                        'goal' : Node(int(pieces[6]), int(pieces[7])),
                         'cost' : float(pieces[8])
                     })
                     
