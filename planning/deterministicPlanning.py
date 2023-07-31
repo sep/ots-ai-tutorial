@@ -1,5 +1,6 @@
 from pathfinding.core.diagonal_movement import DiagonalMovement
-from pathfinding.core.grid import Node
+from pathfinding.core.grid import Node, Grid
+from pathfinding.finder.a_star import AStarFinder
 import os
 import random
 
@@ -28,7 +29,7 @@ class Map():
             lines = [line[:-1] for line in lines]
             newMap = Map()
             if lines[0] == 'type octile':
-                newMap.motionModel = DiagonalMovement
+                newMap.motionModel = DiagonalMovement.always
             else:
                 print("Saw unexpected motion model:", lines[0])
                 raise ValueError
@@ -71,7 +72,7 @@ class Map():
             if not (len(grid) == height):
                       print ("Map has wrong height. Got {} but expected {}".format(len(grid), height))
                       raise ValueError
-            newMap.occlusion = grid
+            newMap.occlusion = Grid(matrix=grid)
             newMap.name = os.path.basename(path)
             return newMap
 
@@ -82,6 +83,13 @@ class Instance():
         self.start = start
         self.goal = goal
         self.optimalCost = knownCost
+
+    def solve(self):
+        solver = AStarFinder(diagonal_movement=self.map.motionModel)
+        path, runs = solver.find_path(self.start, self.goal, self.map.occlusion)
+        print(self.map.occlusion.grid_str(path=path, start=self.start, end=self.goal))
+        #print(path)
+        #print(runs)
 
 
 class InstanceGenerator():
@@ -151,4 +159,4 @@ if __name__ == "__main__":
     #checkAllScenariosLoadable(SCENARIO_ROOT)
     testGenerator = InstanceGenerator.load(TEST_SCEN_PATH)
     instance = testGenerator.randomInstance()
-    print(instance.start, instance.goal, instance.map.name)
+    instance.solve()
