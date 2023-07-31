@@ -21,6 +21,8 @@ class Map():
         self.motionModel = None
         self.occlusion = None
         self.name = None
+        self.width = None
+        self.height = None
         
     @staticmethod
     def loadMap(path):
@@ -74,6 +76,8 @@ class Map():
                       raise ValueError
             newMap.occlusion = Grid(matrix=grid)
             newMap.name = os.path.basename(path)
+            newMap.width = width
+            newMap.height = height
             return newMap
 
 
@@ -87,9 +91,10 @@ class Instance():
     def solve(self):
         solver = AStarFinder(diagonal_movement=self.map.motionModel)
         path, runs = solver.find_path(self.start, self.goal, self.map.occlusion)
-        print(self.map.occlusion.grid_str(path=path, start=self.start, end=self.goal))
-        #print(path)
-        #print(runs)
+        print(self.start.x, self.start.y)
+        print(self.map.occlusion.nodes[self.start.x][self.start.y].walkable)
+        print(self.map.occlusion.nodes[self.goal.x][self.goal.y].walkable)
+        print(self.map.occlusion.grid_str(start=self.start, end=self.goal))
 
 
 class InstanceGenerator():
@@ -101,6 +106,9 @@ class InstanceGenerator():
 
     def randomInstance(self):
         traversal = random.choice(self.traversalDicts)
+        if not (traversal['width'] == self.map.width and traversal['height'] == self.map.height):
+            print("Instance dimmensions {} x {} do not match map dimmensions {} x {}".format(traversal['width'], traversal['height'], self.map.width, self.map.height))
+            raise ValueError
         return Instance(self.map, traversal["start"], traversal["goal"], traversal["cost"])
 
     @staticmethod
