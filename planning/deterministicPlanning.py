@@ -23,6 +23,7 @@ class Map():
         self.name = None
         self.width = None
         self.height = None
+        self.ingestedMap = None
         
     @staticmethod
     def loadMap(path):
@@ -78,23 +79,29 @@ class Map():
             newMap.name = os.path.basename(path)
             newMap.width = width
             newMap.height = height
+            newMap.ingestedMap = grid
             return newMap
 
 
 class Instance():
     def __init__(self, map, start, goal, knownCost=None):
         self.map = map
-        self.start = start
-        self.goal = goal
+        self.startX, self.startY = start
+        self.goalX, self.goalY = goal
         self.optimalCost = knownCost
 
     def solve(self):
+        if not self.map.occlusion.nodes[self.startY][self.startX].walkable:
+            print("Map starting location is not traversable:", self.startX, self.startY)
+            raise ValueError
+        if not self.map.occlusion.nodes[self.goalY][self.goalX].walkable:
+            print("Map goaling location is not traversable:", self.goalX, self.goalY)
+            raise ValueError
         solver = AStarFinder(diagonal_movement=self.map.motionModel)
-        path, runs = solver.find_path(self.start, self.goal, self.map.occlusion)
-        print(self.start.x, self.start.y)
-        print(self.map.occlusion.nodes[self.start.x][self.start.y].walkable)
-        print(self.map.occlusion.nodes[self.goal.x][self.goal.y].walkable)
-        print(self.map.occlusion.grid_str(start=self.start, end=self.goal))
+        startNode = self.map.occlusion.nodes[self.startY][self.startX]
+        goalNode = self.map.occlusion.nodes[self.goalY][self.goalX]
+        path, runs = solver.find_path(startNode, goalNode, self.map.occlusion)
+        print(self.map.occlusion.grid_str(path=path, start=startNode, end=goalNode))
 
 
 class InstanceGenerator():
@@ -107,7 +114,9 @@ class InstanceGenerator():
     def randomInstance(self):
         traversal = random.choice(self.traversalDicts)
         if not (traversal['width'] == self.map.width and traversal['height'] == self.map.height):
-            print("Instance dimmensions {} x {} do not match map dimmensions {} x {}".format(traversal['width'], traversal['height'], self.map.width, self.map.height))
+            print("Instance dimmensions {} x {} do not match map dimmensions {} x {}".format(
+                traversal['width'], traversal['height'], self.map.width, self.map.height)
+            )
             raise ValueError
         return Instance(self.map, traversal["start"], traversal["goal"], traversal["cost"])
 
@@ -141,8 +150,8 @@ class InstanceGenerator():
                     result.traversalDicts.append({
                         'width' : int(pieces[2]),
                         'height' : int(pieces[3]),
-                        'start' : Node(int(pieces[4]), int(pieces[5])),
-                        'goal' : Node(int(pieces[6]), int(pieces[7])),
+                        'start' : (int(pieces[4]), int(pieces[5])),
+                        'goal' : (int(pieces[6]), int(pieces[7])),
                         'cost' : float(pieces[8])
                     })
                     
