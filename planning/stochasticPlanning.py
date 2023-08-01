@@ -35,19 +35,23 @@ class QLearningAgent:
 
         self.errors = []
 
+    @staticmethod
+    def hash(observation):
+        return (observation[0],observation[1],observation[2],observation[3])
+
     def getAction(self, observation):
         """
         Returns the best action with probability (1 - epsilon)
         otherwise a random action with probability epsilon to ensure exploration.
         """
-        observation = (observation[0],observation[1],observation[2],observation[3])
+        stateKey = QLearningAgent.hash(observation)
         # with probability epsilon return a random action to explore the environment
         if np.random.random() < self.epsilon:
             return self.environment.action_space.sample()
 
         # with probability (1 - epsilon) act greedily (exploit)
         else:
-            return int(np.argmax(self.qValues[observation]))
+            return int(np.argmax(self.qValues[stateKey]))
 
     def update(
         self,
@@ -58,15 +62,15 @@ class QLearningAgent:
         nextObservation
     ):
         """Updates the Q-value of an action."""
-        observation = (observation[0], observation[1], observation[2], observation[3])
-        nextObservation = (nextObservation[0], nextObservation[1], nextObservation[2], nextObservation[3])
-        futureQValue = (not terminated) * np.max(self.qValues[nextObservation])
+        stateKey = QLearningAgent.hash(observation)
+        nextStateKey = QLearningAgent.hash(nextObservation)
+        futureQValue = (not terminated) * np.max(self.qValues[nextStateKey])
         temporalDifference = (
-            reward + self.futureDiscount * futureQValue - self.qValues[observation][action]
+            reward + self.futureDiscount * futureQValue - self.qValues[stateKey][action]
         )
 
-        self.qValues[observation][action] = (
-            self.qValues[observation][action] + self.learningRate * temporalDifference
+        self.qValues[stateKey][action] = (
+            self.qValues[stateKey][action] + self.learningRate * temporalDifference
         )
         self.errors.append(temporalDifference)
 
@@ -76,6 +80,7 @@ class QLearningAgent:
 
 if __name__ == "__main__":
     environment = gym.make("CartPole-v1", render_mode='human')
+    #environment = gym.make("MountainCar-v0", render_mode='human')
     learningRate = 0.01
     numEpisodes = 100_000
     startEpsilon = 1.0
