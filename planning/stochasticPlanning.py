@@ -10,6 +10,7 @@ class QLearningAgent:
     def __init__(
         self,
         environment,
+        hash,
         learningRate,
         startEpsilon,
         decay,
@@ -25,26 +26,22 @@ class QLearningAgent:
             futureDiscount: The discount factor for computing the Q-value
         """
         self.qValues = defaultdict(lambda: np.zeros(env.action_space.n))
-
         self.learningRate = learningRate
         self.futureDiscount = futureDiscount
         self.environment = environment
+        self.hash = hash
         self.epsilon = startEpsilon
         self.decay = decay
         self.stopEpsilon = stopEpsilon
 
         self.errors = []
 
-    @staticmethod
-    def hash(observation):
-        return (observation[0],observation[1],observation[2],observation[3])
-
     def getAction(self, observation):
         """
         Returns the best action with probability (1 - epsilon)
         otherwise a random action with probability epsilon to ensure exploration.
         """
-        stateKey = QLearningAgent.hash(observation)
+        stateKey = self.hash(observation)
         # with probability epsilon return a random action to explore the environment
         if np.random.random() < self.epsilon:
             return self.environment.action_space.sample()
@@ -62,8 +59,8 @@ class QLearningAgent:
         nextObservation
     ):
         """Updates the Q-value of an action."""
-        stateKey = QLearningAgent.hash(observation)
-        nextStateKey = QLearningAgent.hash(nextObservation)
+        stateKey = self.hash(observation)
+        nextStateKey = self.hash(nextObservation)
         futureQValue = (not terminated) * np.max(self.qValues[nextStateKey])
         temporalDifference = (
             reward + self.futureDiscount * futureQValue - self.qValues[stateKey][action]
@@ -77,7 +74,10 @@ class QLearningAgent:
     def decay_epsilon(self):
         self.epsilon = max(self.stopEpsilon, self.epsilon - decay)
 
-
+        
+def cartPoleHash(observation):
+    return (observation[0],observation[1],observation[2],observation[3])
+        
 if __name__ == "__main__":
     environment = gym.make("CartPole-v1", render_mode='human')
     #environment = gym.make("MountainCar-v0", render_mode='human')
@@ -88,12 +88,13 @@ if __name__ == "__main__":
     stopEpsilon = 0.1
     env = gym.wrappers.RecordEpisodeStatistics(environment, deque_size=numEpisodes)
     agent = QLearningAgent(
-        environment=env,
-        learningRate=learningRate,
-        startEpsilon=startEpsilon,
-        decay=decay,
-        stopEpsilon=stopEpsilon,
-        futureDiscount=0.95
+        environment = env,
+        hash = cartPoleHash,
+        learningRate = learningRate,
+        startEpsilon = startEpsilon,
+        decay = decay,
+        stopEpsilon = stopEpsilon,
+        futureDiscount = 0.95
     )
     for episode in tqdm(range(numEpisodes)):
         obs, info = env.reset()
