@@ -77,10 +77,13 @@ class QLearningAgent:
         
 def cartPoleHash(observation):
     return (observation[0],observation[1],observation[2],observation[3])
+
+def mountainCarHash(observation):
+    return (observation[0], observation[1])
         
 if __name__ == "__main__":
-    environment = gym.make("CartPole-v1", render_mode='human')
-    #environment = gym.make("MountainCar-v0", render_mode='human')
+    #environment = gym.make("CartPole-v1", render_mode='human')
+    environment = gym.make("MountainCar-v0", render_mode='human')
     learningRate = 0.01
     numEpisodes = 100_000
     startEpsilon = 1.0
@@ -89,7 +92,8 @@ if __name__ == "__main__":
     env = gym.wrappers.RecordEpisodeStatistics(environment, deque_size=numEpisodes)
     agent = QLearningAgent(
         environment = env,
-        hash = cartPoleHash,
+        #hash = cartPoleHash,
+        hash = mountainCarHash,
         learningRate = learningRate,
         startEpsilon = startEpsilon,
         decay = decay,
