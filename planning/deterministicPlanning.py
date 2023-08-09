@@ -16,7 +16,7 @@ TRAVERSABLE = ['.', 'G', 'S', 'W']
 BLOCKED = ['@', 'O']
 
 class Map():
-    
+    # Class representing maps from the video games we'll be using today
     def __init__(self):
         self.motionModel = None
         self.occlusion = None
@@ -27,6 +27,7 @@ class Map():
         
     @staticmethod
     def loadMap(path):
+        # Load the map up from the disk
         with open(path, 'r') as stream:
             lines = stream.readlines()
             lines = [line[:-1] for line in lines]
@@ -84,6 +85,7 @@ class Map():
 
 
 class Instance():
+    # An instance is a map with a start and a goal
     def __init__(self, map, start, goal, knownCost=None):
         self.map = map
         self.startX, self.startY = start
@@ -91,6 +93,7 @@ class Instance():
         self.optimalCost = knownCost
 
     def solve(self):
+        # This invokes the solver 
         if not self.map.occlusion.nodes[self.startY][self.startX].walkable:
             print("Map starting location is not traversable:", self.startX, self.startY)
             raise ValueError
@@ -103,11 +106,12 @@ class Instance():
         startNode = self.map.occlusion.nodes[self.startY][self.startX]
         goalNode = self.map.occlusion.nodes[self.goalY][self.goalX]
         path, runs = solver.find_path(startNode, goalNode, self.map.occlusion)
+        # pretty print the solution
         print(self.map.occlusion.grid_str(path=path, start=startNode, end=goalNode))
 
 
 class InstanceGenerator():
-
+    # This will build random instances for us to solve
     def __init__(self):
         self.name = None
         self.map = None
@@ -124,6 +128,8 @@ class InstanceGenerator():
 
     @staticmethod
     def mapPathOfInstancePath(instancePath):
+        # In the moving AI dataset, instances are paired with maps and share names.
+        # This lets us compute the path for maps from the path 
         mapName = os.path.basename(instancePath)
         mapName = mapName[:-5]
         mapName = os.path.join("data", "maps", mapName)
@@ -132,6 +138,7 @@ class InstanceGenerator():
 
     @staticmethod
     def load(instancePath, mapPath=None):
+        # Create an instance from a path
         if mapPath is None:
             mapPath = InstanceGenerator.mapPathOfInstancePath(instancePath)
         result = InstanceGenerator()
@@ -161,6 +168,7 @@ class InstanceGenerator():
         
 
 def checkAllMapsLoadable(rootDir):
+    # Kick the tires on the map loading code
     for fname in os.listdir(rootDir):
         mapPath = os.path.join(rootDir, fname)
         Map.loadMap(mapPath)
@@ -168,6 +176,7 @@ def checkAllMapsLoadable(rootDir):
 
 
 def checkAllScenariosLoadable(rootDir):
+    # Kick the tires on the scenario loading code
     for fname in os.listdir(rootDir):
         instancePath = os.path.join(rootDir, fname)
         InstanceGenerator.load(instancePath)
@@ -176,6 +185,9 @@ def checkAllScenariosLoadable(rootDir):
 
 if __name__ == "__main__":
     #checkAllScenariosLoadable(SCENARIO_ROOT)
+    # Try loading up a couple of different maps and doing pathfinding on each of them
+    # Try editing an input map
+    # Try creating your own input files
     testGenerator = InstanceGenerator.load(TEST_SCEN_PATH)
     instance = testGenerator.randomInstance()
     instance.solve()
