@@ -23,6 +23,7 @@ if __name__ == "__main__":
         "Not bad at all"  # Capitalized negation
     ]
 
+    # Spins up your sentiment analyzer
     analyzer = SentimentIntensityAnalyzer()
 
 
