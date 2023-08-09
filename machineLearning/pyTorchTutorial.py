@@ -128,28 +128,4 @@ if __name__ == "__main__":
     optimizer = torch.optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
     trainModel(model, lossFunction, optimizer, trainLoader, testLoader)
 
-    # We have to build an optimizer for each model we want to use because it reaches into the model internals
-    # to poke at the network between training iterations.
-
-    # ToDo: break this out into a separate file for demo during the exercise
-    model2 = nn.Sequential(
-        nn.Conv2d(1, 32, kernel_size=(3,3), stride=1, padding=1),
-        nn.ReLU(),
-        nn.Dropout(0.3),
- 
-        nn.Conv2d(32, 32, kernel_size=(3,3), stride=1, padding=1),
-        nn.ReLU(),
-        nn.MaxPool2d(kernel_size=(2, 2)),
- 
-        nn.Flatten(),
- 
-        nn.Linear(6272, 64),
-        nn.ReLU(),
-        nn.Dropout(0.5),
- 
-        nn.Linear(64, 10)
-
-        )
-    optimizer = torch.optim.SGD(model2.parameters(), lr=0.01, momentum=0.9)
-    trainModel(model2, lossFunction, optimizer, trainLoader, testLoader)
  
