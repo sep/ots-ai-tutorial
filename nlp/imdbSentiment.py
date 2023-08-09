@@ -74,33 +74,16 @@ def isPositiveSum(compounds):
     else:
         return NEGATIVE
 
-# TODO: Replace with Stub
+# TODO: Fill this in
 def isPositiveCount(compounds):
-    posCount = 0
-    negCount = 0
-    for score in compounds:
-        if score > 0:
-            posCount += 1
-        elif score < 0:
-            negCount += 1
-    if posCount > negCount:
-        return POSITIVE
-    else:
-        return NEGATIVE
+    raise NotImplementedError
 
 
-# TODO: Replace with Stub
+# TODO: Fill this in
 def isPositiveExtrema(compounds):
-    mostNegative = POSITIVE
-    mostPositive = NEGATIVE
-    for score in compounds:
-        mostNegative = min(score, mostNegative)
-        mostPositive = max(score, mostPositive)
-    if mostPositive > abs(mostNegative):
-        return POSITIVE
-    else:
-        return NEGATIVE
+    raise NotImplementedError
 
+# TODO: Come up with one or two of your own!
 
 # This predicts the overall sentiment of the instances
 # Note how we pass in a prediction function to be used later
@@ -149,6 +132,7 @@ def pad(lst, targetLength):
     lst.extend([0] * (targetLength - len(lst)))
 
 
+# We'll walk through this together as exercise 2B
 # We could do something more advanced on top of the VADER scoring.
 # Here's one potential approach.  We use the input sentiment vectors
 # as input to machine learning, and learn a function from those
@@ -211,8 +195,6 @@ def sklearnUsingVADER():
 
 
 if __name__ == "__main__":
-    # TODO: Split up into multiple assignment branches
-    # 1. Just the vader stuf
-    # 2. The Vader Stuff filled in and the ML branch
-    bareVADER()
-    sklearnUsingVADER()
+    #bareVADER()         # Exercise 2A
+    #sklearnUsingVADER() # Exercise 2B
+    print("Hello World")
