@@ -5,6 +5,45 @@ import json
 # Spins up your sentiment analyzer
 analyzer = SentimentIntensityAnalyzer()
 
+def exercise1a():
+    # - VADER works best when analysis is done at the sentence level
+    # - (but it can work on single words or entire novels).
+    # - One reason you might analyze single words is because they're annotation to an image or video.
+    # - Here are some positive examples
+    conceptList = ["balloons", "cake", "candles", "happy birthday", "friends", "laughing", "smiling", "party"]
+    conceptSentiments = 0.0
+    for concept in conceptList:
+        vs = analyzer.polarity_scores(concept)
+        print("{:-<15} {}".format(concept, str(vs['compound'])))
+        conceptSentiments += vs["compound"]
+    print("AVERAGE SENTIMENT OF TAGS/LABELS: \t" + str(round(conceptSentiments / len(conceptList), 4)))
+    print("\t")
+
+def exercise1b():
+    # - These are some positive examples
+    conceptList = ["riot", "fire", "fight", "blood", "mob", "war", "police", "tear gas"]
+    conceptSentiments = 0.0
+    for concept in conceptList:
+        vs = analyzer.polarity_scores(concept)
+        print("{:-<15} {}".format(concept, str(vs['compound'])))
+        conceptSentiments += vs["compound"]
+    print("AVERAGE SENTIMENT OF TAGS/LABELS: \t" + str(round(conceptSentiments / len(conceptList), 4)))
+
+
+def exercise1c():
+    # - These examples are somewhat complicated
+    conceptList = [
+        "overcome", "hard-won", "baroque", "antique", "solvent", "negative", "positive",
+        "cancer", "libra"
+    ]
+    conceptSentiments = 0.0
+    for concept in conceptList:
+        vs = analyzer.polarity_scores(concept)
+        print("{:-<15} {}".format(concept, str(vs['compound'])))
+        conceptSentiments += vs["compound"]
+    print("AVERAGE SENTIMENT OF TAGS/LABELS: \t" + str(round(conceptSentiments / len(conceptList), 4)))
+
+
 def exercise2a():
     # Exercise 2 - Sentence Level Analysis
     sentences = [
@@ -114,28 +153,11 @@ def exercise3():
 
 # Reproduces the demo code packaged with VaderSentmiment
 if __name__ == "__main__":
+    exercise1a()
+    exercise1b()
+    exercise1c()
     exercise2a()
     exercise2b()
     exercise2c()
-    exercise3()
-
-    
-
-
-    # - Analyze sentiment of IMAGES/VIDEO data based on annotation 'tags' or image labels.
-    conceptList = ["balloons", "cake", "candles", "happy birthday", "friends", "laughing", "smiling", "party"]
-    conceptSentiments = 0.0
-    for concept in conceptList:
-        vs = analyzer.polarity_scores(concept)
-        print("{:-<15} {}".format(concept, str(vs['compound'])))
-        conceptSentiments += vs["compound"]
-    print("AVERAGE SENTIMENT OF TAGS/LABELS: \t" + str(round(conceptSentiments / len(conceptList), 4)))
-    print("\t")
-    conceptList = ["riot", "fire", "fight", "blood", "mob", "war", "police", "tear gas"]
-    conceptSentiments = 0.0
-    for concept in conceptList:
-        vs = analyzer.polarity_scores(concept)
-        print("{:-<15} {}".format(concept, str(vs['compound'])))
-        conceptSentiments += vs["compound"]
-    print("AVERAGE SENTIMENT OF TAGS/LABELS: \t" + str(round(conceptSentiments / len(conceptList), 4)))
+    exercise3()    
 
