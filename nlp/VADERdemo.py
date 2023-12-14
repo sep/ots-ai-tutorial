@@ -94,15 +94,7 @@ def exercise2c():
         print("{:-<69} {}".format(sentence, str(vs)))
 
 
-
-# Reproduces the demo code packaged with VaderSentmiment
-if __name__ == "__main__":
-    exercise2a()
-    exercise2b()
-    exercise2c()
-
-
-    
+def exercise3():
     # - VADER works best when analysis is done at the sentence level
     # - (but it can work on single words or entire novels).
     paragraph = "It was one of the worst movies I've seen, despite good reviews. Unbelievably bad acting!! Poor direction. VERY poor production. The movie was bad. Very bad movie. VERY BAD movie!"
@@ -111,7 +103,6 @@ if __name__ == "__main__":
     # -- tokens for VADER, then average the results for the paragraph
     # -- like this:
 
-
     sentence_list = tokenize.sent_tokenize(paragraph)
     paragraphSentiments = 0.0
     for sentence in sentence_list:
@@ -119,6 +110,17 @@ if __name__ == "__main__":
         print("{:-<69} {}".format(sentence, str(vs["compound"])))
         paragraphSentiments += vs["compound"]
     print("AVERAGE SENTIMENT FOR PARAGRAPH: \t" + str(round(paragraphSentiments / len(sentence_list), 4)))
+
+
+# Reproduces the demo code packaged with VaderSentmiment
+if __name__ == "__main__":
+    exercise2a()
+    exercise2b()
+    exercise2c()
+    exercise3()
+
+    
+
 
     # - Analyze sentiment of IMAGES/VIDEO data based on annotation 'tags' or image labels.
     conceptList = ["balloons", "cake", "candles", "happy birthday", "friends", "laughing", "smiling", "party"]
