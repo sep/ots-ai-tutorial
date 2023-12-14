@@ -19,7 +19,22 @@ you're managing your environments, but may look something like
 
 ## Exercise 1 - Word Sentiment Analysis
 
+VADER (and many tools like it) works by associating a score or valence
+to individual words and phrases.  In exercise 1, we'll be looking at:
+
+* (a) words that generally denote good things
+* (b) words that generally denote bad things
+* (c) the messy middle.
+
 ## Exercise 2 - Sentence Level Analysis
+
+Exercise 1c showed us that some words have ambiguous interpretations.
+When words are a little iffy on the good/bad scale, we need to lean
+into larger contexts.  That means sentence level analysis.  In this exercise, we'll look at:
+
+* (a) sentences that are obviously good or bad
+* (b) sentences that are a little ambiguous
+* (c) sentences that you make with the intent of confusing VADER
 
 ## Exercise 3 - Paragraph Level Analysis
 

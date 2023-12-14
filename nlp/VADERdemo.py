@@ -121,7 +121,12 @@ def exercise2b():
         print("{:-<69} {}".format(sentence, str(vs)))
 
 def exercise2c():
-    # Now you try
+    # Now you try.  The goal here is to be confusing to automated
+    # analysis while still being very obvious to human consumers.
+    # Some strategies you might consider:
+    # * Sarcasm
+    # * Literary or Historical References
+    # * Scare Quotes
     your_sentences = [
     ]
     
