@@ -4,17 +4,17 @@ Off-the-shelf AI Tutorial (Originally Prepared for Indy.Code() 2023)
 # Requirements
 
 * An environment managment tool for python
-  * the demo uses *venv*
-* *pip* for managing python libraries
-* *python*, the following libraries, and their supports
-  * matplotlib
-  * sklearn
-  * pytorch
-  * torchvision
-  * vaderSentiment
-  * nltk
-  * gymnasium
-  * pathfinding
+  * the demo uses `venv`
+* `pip` for managing python libraries
+* `python`, the following libraries, and their supports
+  * `matplotlib`
+  * `sklearn`
+  * `pytorcd`
+  * `torchvision`
+  * `vaderSentiment`
+  * `nltk`
+  * `gymnasium`
+  * `pathfinding`
   
 
 
