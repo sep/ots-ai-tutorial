@@ -1,6 +1,7 @@
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from nltk import tokenize
 import json
+import random
 
 # Spins up your sentiment analyzer
 analyzer = SentimentIntensityAnalyzer()
@@ -138,7 +139,7 @@ def exercise2c():
         print("{:-<69} {}".format(sentence, str(vs)))
 
 
-def exercise3():
+def exercise3a():
     # - VADER works best when analysis is done at the sentence level
     # - (but it can work on single words or entire novels).
     paragraph = "It was one of the worst movies I've seen, despite good reviews. Unbelievably bad acting!! Poor direction. VERY poor production. The movie was bad. Very bad movie. VERY BAD movie!"
@@ -156,6 +157,23 @@ def exercise3():
     print("AVERAGE SENTIMENT FOR PARAGRAPH: \t" + str(round(paragraphSentiments / len(sentence_list), 4)))
 
 
+def exercise3b():
+    # You may have noticed that the aggregation in VADER isn't order-aware.
+    # Do you think that's a problem?
+    paragraph = "It was one of the worst movies I've seen, despite good reviews. Unbelievably bad acting!! Poor direction. VERY poor production. The movie was bad. Very bad movie. VERY BAD movie!"
+    sentence_list = tokenize.sent_tokenize(paragraph)
+    for iteration in range(10):
+        paragraphSentiments = 0.0
+        random.shuffle(sentence_list)
+        for sentence in sentence_list:
+            vs = analyzer.polarity_scores(sentence)
+            print("{:-<69} {}".format(sentence, str(vs["compound"])))
+            paragraphSentiments += vs["compound"]
+        print("iteration " + str(iteration) + " AVERAGE SENTIMENT FOR PARAGRAPH: \t" + str(round(paragraphSentiments / len(sentence_list), 4)))
+        print()
+
+
+
 # Reproduces the demo code packaged with VaderSentmiment
 if __name__ == "__main__":
     exercise1a()
@@ -164,5 +182,6 @@ if __name__ == "__main__":
     exercise2a()
     exercise2b()
     exercise2c()
-    exercise3()    
+    exercise3a()
+    exercise3b()    
 
