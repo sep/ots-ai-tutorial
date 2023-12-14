@@ -38,6 +38,12 @@ into larger contexts.  That means sentence level analysis.  In this exercise, we
 
 ## Exercise 3 - Paragraph Level Analysis
 
+Often we don't care about single sentences when analyzing text.  We
+care about tweets and blog posts and books.  VADER is capable of doing
+paragraph (and beyond) level analysis.  In this exercise, we'll look
+at the default implementation of paragraph level analysis in VADER and
+consider how sentence order impacts the performance of the analysis.
+
 ## Exercise 4 - What if I disagree with VADER?
 
 VADER is a lovely & useful tool, but it's also *certainly* **Research

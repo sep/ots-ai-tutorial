@@ -173,6 +173,25 @@ def exercise3b():
         print()
 
 
+def scoreSequence(valences):
+    # Exercise 3c, rewrite me
+    vs = 0
+    for score in valences:
+        vs += score["compound"]
+    return vs
+        
+def exercise3c():
+    # Consider Implementing an aggregation technique which is sentence order specific
+    paragraph = "It was one of the worst movies I've seen, despite good reviews. Unbelievably bad acting!! Poor direction. VERY poor production. The movie was bad. Very bad movie. VERY BAD movie!"
+    sentence_list = tokenize.sent_tokenize(paragraph)
+    for iteration in range(10):
+        paragraphSentiments = 0.0
+        random.shuffle(sentence_list)
+        scores = map(analyzer.polarity_scores, sentence_list)
+        vs = scoreSequence(scores)
+        print("iteration " + str(iteration) + " AVERAGE SENTIMENT FOR PARAGRAPH: \t" + str(round(vs / len(sentence_list), 4)))
+        print()
+
 
 # Reproduces the demo code packaged with VaderSentmiment
 if __name__ == "__main__":
@@ -183,5 +202,6 @@ if __name__ == "__main__":
     exercise2b()
     exercise2c()
     exercise3a()
-    exercise3b()    
+    exercise3b()
+    exercise3c()    
 
