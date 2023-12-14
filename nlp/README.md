@@ -42,7 +42,11 @@ Often we don't care about single sentences when analyzing text.  We
 care about tweets and blog posts and books.  VADER is capable of doing
 paragraph (and beyond) level analysis.  In this exercise, we'll look
 at the default implementation of paragraph level analysis in VADER and
-consider how sentence order impacts the performance of the analysis.
+consider how sentence order impacts the performance of the analysis:
+
+* (a) See how paragraph analysis is done
+* (b) See that by default vader is insensitive to sentence order
+* (c) Implement an aggregation scheme to account for sentence order
 
 ## Exercise 4 - What if I disagree with VADER?
 
@@ -96,8 +100,44 @@ Boosters are on line 46 in `BOOSTER_DICT` and negations on line 33 in `NEGATE`.
 
 # `imdbSentiment.py`
 
+Now that we've played around with one library for sentiment analysis,
+lets apply it to an interesting problem.  We're going to try and
+recover user sentiment from IMDB reviews.  We've got plain text
+reviews, sorted by positive and negative score.  We'd like to recover
+whether or not a rewiew was positive or negative from just the text.
+
+## Exercise 0 - Getting Familiar With Things
+
+* Look at the `data` directory
+  * Explore some positive examples in `data/aclImdb/train/pos/`
+  * Explore some negative examples in `data/aclImdb/train/neg/`
+
 ## Exercise 1 - Run Sentiment Analysis Using Just VADER
 
-## Exercise 2 - Try Different Segmenting & Score Aggregation Tools
+## Exercise 2 - Try Different Score Aggregation Tools
+
+By default, the code is using `isPositiveSum` to score blocks of text.
+This is just a straight up addition of the combined valence reported
+by VADER.  As we saw in the previous demo, that may not always return
+the valence we want for a larger body of text.
+
+There are two suggested score aggregators in the code,
+`isPositiveCount` and `isPositiveExtrema`.  Fill these in and test them. Consider
+adding some of your own as well.
+
+Things to think about:
+* Which do you think will perform best (before you run them and find out)?
+* Why is aggregation method A better than B?
 
 ## Exercise 3 - Use VADER to Vectorize Text for Classic ML
+
+While we're hand rolling aggregation techniques, one approach is to
+'simply' apply machine learning (ML) to learn the function for us.  As
+we'll see in the next set of lectures and exercises, ML uses a numeric
+representation of a problem and a target output to learn the function
+mapping input to output from a large number of examples.
+
+* Examine the function `sklearnUsingVADER`
+* Run the machine learning approach and compare to the direct VADER approaches
+* Think about how else you might aggregate the VADER analysis into a numeric vector for ML
+* Try one such implementation, if you can't come up with one, use counts of positive and negative sentences
