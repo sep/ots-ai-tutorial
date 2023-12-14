@@ -81,11 +81,25 @@ def exercise2b():
         vs = analyzer.polarity_scores(sentence)
         print("{:-<69} {}".format(sentence, str(vs)))
 
+def exercise2c():
+    # Now you try
+    your_sentences = [
+    ]
+    
+    # - Analyze examples of tricky sentences that cause trouble to other sentiment analysis tools.
+    #  -- special case idioms - e.g., 'never good' vs 'never this good', or 'bad' vs 'bad ass'.
+    #  -- special uses of 'least' as negation versus comparison
+    for sentence in your_sentences:
+        vs = analyzer.polarity_scores(sentence)
+        print("{:-<69} {}".format(sentence, str(vs)))
+
+
 
 # Reproduces the demo code packaged with VaderSentmiment
 if __name__ == "__main__":
     exercise2a()
     exercise2b()
+    exercise2c()
 
 
     
