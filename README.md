@@ -3,13 +3,13 @@ Off-the-shelf AI Tutorial (Originally Prepared for Indy.Code() 2023)
 
 # Requirements
 
-* An environment managment tool for python
+* An environment management tool for python
   * the demo uses `venv`
 * `pip` for managing python libraries
 * `python`, the following libraries, and their supports
   * `matplotlib`
   * `sklearn`
-  * `pytorcd`
+  * `pytorch`
   * `torchvision`
   * `vaderSentiment`
   * `nltk`
@@ -31,7 +31,7 @@ python libraries for use in the tutorials.
 
 ##`./nlp/setup.sh`
 
-Sets up a virutal environment for the natural language processing
+Sets up a virtual environment for the natural language processing
 tutorial and `pip` installs several python libraries used in the NLP
 tutorial, specifically:
 
@@ -51,7 +51,7 @@ installs the python libraries used in the tutorial, specifically:
 * `tqdm` - a terminal-based progress bar gymnasium relies on
 * `pathfinding` - a 2D pathfinding library
 
-It also downlods a 2D pathfinding dataset (maps from the Baldur's Gate
+It also downloads a 2D pathfinding dataset (maps from the Baldur's Gate
 series) and unpacks them to `./planning/maps` and
 `./planning/scenarios`
 
