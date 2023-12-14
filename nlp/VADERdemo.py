@@ -1,3 +1,4 @@
+# Reproduces and extends the demo code packaged with VaderSentmiment
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from nltk import tokenize
 import json
@@ -193,14 +194,18 @@ def exercise3c():
         print()
 
 
-# Reproduces the demo code packaged with VaderSentmiment
 if __name__ == "__main__":
+    # Exercise 1
     exercise1a()
     exercise1b()
     exercise1c()
+
+    # Exercise 2
     exercise2a()
     exercise2b()
     exercise2c()
+
+    # Exercise 3
     exercise3a()
     exercise3b()
     exercise3c()    
