@@ -29,7 +29,7 @@ you in getting your own machine configured for the tutorial.
 Downloads general development tools and installs various `apt-get`able
 python libraries for use in the tutorials.
 
-##`./nlp/setup.sh`
+## `./nlp/setup.sh`
 
 Sets up a virtual environment for the natural language processing
 tutorial and `pip` installs several python libraries used in the NLP
@@ -41,7 +41,7 @@ tutorial, specifically:
 Further, it downloads the IMDB sentiment dataset from standard and
 unpacks it into `./nlp/data/`
 
-##`./planning/setup.sh`
+## `./planning/setup.sh`
 
 Sets up a virtual environment for the planning tutorial and `pip`
 installs the python libraries used in the tutorial, specifically:
