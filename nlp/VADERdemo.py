@@ -2,8 +2,11 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from nltk import tokenize
 import json
 
-# Reproduces the demo code packaged with VaderSentmiment
-if __name__ == "__main__":
+# Spins up your sentiment analyzer
+analyzer = SentimentIntensityAnalyzer()
+
+def exercise2a():
+    # Exercise 2 - Sentence Level Analysis
     sentences = [
         "VADER is smart, handsome, and funny.",  # positive sentence example
         "VADER is smart, handsome, and funny!",  # punctuation emphasis adjusts intensity
@@ -22,10 +25,6 @@ if __name__ == "__main__":
         "Catch utf-8 emoji such as 💘 and 💋 and 😁",  # emojis handled
         "Not bad at all"  # Capitalized negation
     ]
-
-    # Spins up your sentiment analyzer
-    analyzer = SentimentIntensityAnalyzer()
-
 
     # Analyze typical example cases, including handling of:
     # -- negations
@@ -58,6 +57,7 @@ if __name__ == "__main__":
     # These are the most useful metrics if you want multidimensional
     # measures of sentiment for a given sentence.
 
+def exercise2b():
     tricky_sentences = [
         "Sentiment analysis has never been good.",
         "Sentiment analysis has never been this good!",
@@ -80,6 +80,13 @@ if __name__ == "__main__":
     for sentence in tricky_sentences:
         vs = analyzer.polarity_scores(sentence)
         print("{:-<69} {}".format(sentence, str(vs)))
+
+
+# Reproduces the demo code packaged with VaderSentmiment
+if __name__ == "__main__":
+    exercise2a()
+    exercise2b()
+
 
     
     # - VADER works best when analysis is done at the sentence level
