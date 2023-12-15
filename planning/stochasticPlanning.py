@@ -88,26 +88,8 @@ def mountainCarHash(observation):
     # Exercise 3: As above, what about reducing the space.  How would you do so effectively?
     # car position, velocity
     return (observation[0], observation[1])
-        
-if __name__ == "__main__":
-    #environment = gym.make("CartPole-v1", render_mode='human')
-    environment = gym.make("MountainCar-v0", render_mode='human')
-    learningRate = 0.01
-    numEpisodes = 100_000
-    startEpsilon = 1.0
-    decay = startEpsilon / (numEpisodes / 2)  # reduce the exploration over time
-    stopEpsilon = 0.1
-    env = gym.wrappers.RecordEpisodeStatistics(environment, deque_size=numEpisodes)
-    agent = QLearningAgent(
-        environment = env,
-        #hash = cartPoleHash,
-        hash = mountainCarHash,
-        learningRate = learningRate,
-        startEpsilon = startEpsilon,
-        decay = decay,
-        stopEpsilon = stopEpsilon,
-        futureDiscount = 0.95
-    )
+
+def trainAgent(env, agent):
     for episode in tqdm(range(numEpisodes)):
         obs, info = env.reset()
         done = False
@@ -126,3 +108,24 @@ if __name__ == "__main__":
 
             agent.decay_epsilon()
 
+
+if __name__ == "__main__":
+    environment = gym.make("CartPole-v1", render_mode='human')
+    #environment = gym.make("MountainCar-v0")#, render_mode='human')
+    learningRate = 0.01
+    numEpisodes = 100_000
+    startEpsilon = 1.0
+    decay = startEpsilon / (numEpisodes / 2)  # reduce the exploration over time
+    stopEpsilon = 0.1
+    env = gym.wrappers.RecordEpisodeStatistics(environment, deque_size=numEpisodes)
+    agent = QLearningAgent(
+        environment = env,
+        #hash = cartPoleHash,
+        hash = mountainCarHash,
+        learningRate = learningRate,
+        startEpsilon = startEpsilon,
+        decay = decay,
+        stopEpsilon = stopEpsilon,
+        futureDiscount = 0.95
+    )
+    trainAgent(env, agent)
