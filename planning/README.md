@@ -30,10 +30,17 @@ Do all the parts make sense?
 
 # `stochasticPlanning.py`
 
-## Exercise 0 - Run the Cart Pole Exercise with the default settings
+## Exercise 0 - Run the Cart Pole & Mountain Car Exercise with the default settings
 
-## Exercise 1 - Play around with Cart Pole Hash and Shape It
+## Exercise 1 - Run one of those to completion without display
 
-## Exercise 2 - Run Mountain Car exercise with default settings
+## Exercise 2 - Play around with training arguments
 
-## Exercise 3 - Play around with Mountain Car State Hash and Shape It
+* Learning Rate
+* Start Epsilon
+* Stop Epsilon
+* Future Discount
+
+## Exercise 3 - Make some new hashes for Pole Cart
+
+## Exercise 4 - Make some new hashes for Mountain Car
