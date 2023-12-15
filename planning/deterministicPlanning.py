@@ -6,14 +6,13 @@ import random
 
 MAP_ROOT= os.path.join("data", "maps")
 SCENARIO_ROOT = os.path.join("data", "scenarios")
-TEST_SCEN_PATH= os.path.join(SCENARIO_ROOT, "AR0011SR.map.scen")
-TEST_MAP_PATH= os.path.join(MAP_ROOT, "AR0011SR.map")
 OCTILE_MOTION = 'type octile'
 HEIGHT = 'height'
 WIDTH = 'width'
 MAP = 'map'
 TRAVERSABLE = ['.', 'G', 'S', 'W']
 BLOCKED = ['@', 'O']
+
 
 class Map():
     # Class representing maps from the video games we'll be using today
@@ -182,6 +181,8 @@ def checkAllScenariosLoadable(rootDir):
         InstanceGenerator.load(instancePath)
     return True
             
+
+TEST_SCEN_PATH= os.path.join(SCENARIO_ROOT, "AR0011SR.map.scen")
 
 if __name__ == "__main__":
     #checkAllScenariosLoadable(SCENARIO_ROOT)
