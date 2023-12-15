@@ -132,5 +132,8 @@ def buildEnvAgent(
 
 
 if __name__ == "__main__":
-    env,agent,episodes,decay = buildEnvAgent('CartPole-v1', cartPoleHash, renderMode='human')
+    #env,agent,episodes,decay = buildEnvAgent('CartPole-v1', cartPoleHash, renderMode='human')
+    #env,agent,episodes,decay = buildEnvAgent('CartPole-v1', cartPoleHash)
+    env,agent,episodes,decay = buildEnvAgent('MountainCar-v0', mountainCarHash, renderMode='human')
+    #env,agent,episodes,decay = buildEnvAgent('MountainCar-v0', mountainCarHash)
     trainAgent(env,agent,episodes,decay)
