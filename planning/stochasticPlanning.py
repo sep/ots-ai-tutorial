@@ -78,14 +78,13 @@ class QLearningAgent:
 
         
 def cartPoleHash(observation):
-    # cart position, cart velocity, pole angle, pole angular velocity
-    # Exercise 1: What happens when we change this?
+    # Exercise 3: What happens when we change this?
     #             Can we discard elements?  Reduce their resolution?
+    # cart position, cart velocity, pole angle, pole angular velocity
     return (observation[0],observation[1],observation[2],observation[3])
 
 def mountainCarHash(observation):
-    # Exercise 2: What should this be? How do we figure it out?
-    # Exercise 3: As above, what about reducing the space.  How would you do so effectively?
+    # Exercise 4: As above, what about reducing the space.  How would you do so effectively?
     # car position, velocity
     return (observation[0], observation[1])
 
