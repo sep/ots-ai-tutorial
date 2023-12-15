@@ -3,6 +3,7 @@ from pathfinding.core.grid import Node, Grid
 from pathfinding.finder.a_star import AStarFinder
 import os
 import random
+import timeit
 
 MAP_ROOT= os.path.join("data", "maps")
 SCENARIO_ROOT = os.path.join("data", "scenarios")
@@ -191,4 +192,5 @@ if __name__ == "__main__":
     # Try creating your own input files
     testGenerator = InstanceGenerator.load(TEST_SCEN_PATH)
     instance = testGenerator.randomInstance()
-    instance.solve()
+    time = timeit.timeit(instance.solve, number=1)
+    print(str(time) + " seconds")
