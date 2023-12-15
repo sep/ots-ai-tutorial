@@ -110,7 +110,7 @@ def trainAgent(env, agent, numEpisodes, decay):
 
 def buildEnvAgent(
         domain, hash, renderMode=None, learningRate = 0.01,
-        numEpisodes = 100_000, startEpsilon = 1.0, stopEpsilon = 0.1):
+        numEpisodes = 100_000, startEpsilon = 1.0, stopEpsilon = 0.1, futureDiscount = 0.95):
     None
     environemnt = None
     if renderMode is None:
@@ -126,14 +126,22 @@ def buildEnvAgent(
         startEpsilon = startEpsilon,
         decay = decay,
         stopEpsilon = stopEpsilon,
-        futureDiscount = 0.95
+        futureDiscount = futureDiscount
     )
     return (env, agent, numEpisodes, decay)
 
 
 if __name__ == "__main__":
+    # Exercise 0: Run an agent or two with the human display mode, just to see what it's doing
+
     #env,agent,episodes,decay = buildEnvAgent('CartPole-v1', cartPoleHash, renderMode='human')
-    #env,agent,episodes,decay = buildEnvAgent('CartPole-v1', cartPoleHash)
-    env,agent,episodes,decay = buildEnvAgent('MountainCar-v0', mountainCarHash, renderMode='human')
+    #env,agent,episodes,decay = buildEnvAgent('MountainCar-v0', mountainCarHash, renderMode='human')
+
+    # Exercise 1: Run an agent (without display) to completion to get
+    # a sense for how computationally intense these processes are.
+    env,agent,episodes,decay = buildEnvAgent('CartPole-v1', cartPoleHash)
     #env,agent,episodes,decay = buildEnvAgent('MountainCar-v0', mountainCarHash)
+
+    
+
     trainAgent(env,agent,episodes,decay)
