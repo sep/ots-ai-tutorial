@@ -89,7 +89,7 @@ def mountainCarHash(observation):
     # car position, velocity
     return (observation[0], observation[1])
 
-def trainAgent(env, agent):
+def trainAgent(env, agent, numEpisodes, decay):
     for episode in tqdm(range(numEpisodes)):
         obs, info = env.reset()
         done = False
@@ -108,24 +108,29 @@ def trainAgent(env, agent):
 
             agent.decay_epsilon()
 
-
-if __name__ == "__main__":
-    environment = gym.make("CartPole-v1", render_mode='human')
-    #environment = gym.make("MountainCar-v0")#, render_mode='human')
-    learningRate = 0.01
-    numEpisodes = 100_000
-    startEpsilon = 1.0
+def buildEnvAgent(
+        domain, hash, renderMode=None, learningRate = 0.01,
+        numEpisodes = 100_000, startEpsilon = 1.0, stopEpsilon = 0.1):
+    None
+    environemnt = None
+    if renderMode is None:
+        environment = gym.make(domain)
+    else:
+        environment = gym.make(domain, render_mode=renderMode)
     decay = startEpsilon / (numEpisodes / 2)  # reduce the exploration over time
-    stopEpsilon = 0.1
     env = gym.wrappers.RecordEpisodeStatistics(environment, deque_size=numEpisodes)
     agent = QLearningAgent(
         environment = env,
-        #hash = cartPoleHash,
-        hash = mountainCarHash,
+        hash = hash,
         learningRate = learningRate,
         startEpsilon = startEpsilon,
         decay = decay,
         stopEpsilon = stopEpsilon,
         futureDiscount = 0.95
     )
-    trainAgent(env, agent)
+    return (env, agent, numEpisodes, decay)
+
+
+if __name__ == "__main__":
+    env,agent,episodes,decay = buildEnvAgent('CartPole-v1', cartPoleHash, renderMode='human')
+    trainAgent(env,agent,episodes,decay)
