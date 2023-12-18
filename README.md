@@ -13,8 +13,19 @@ Off-the-shelf AI Tutorial (Originally Prepared for Indy.Code() 2023)
   * `torchvision`
   * `vaderSentiment`
   * `nltk`
+    * You'll want to run `nltk.download all` before the day of the tutorial
   * `gymnasium`
+    * You'll want to pip install gymnasium[classic_control] as well
   * `pathfinding`
+
+* The following datasets
+  * NIST digit data (included with sklearn)
+  * Better Resolution NIST digit data (downloadable with torchvision)
+    * `datasets.MNIST('data', download=True, transform=transform, train=True)`
+    * `dataset.MNIST('data', download=True, transform=transform, train=False)`
+  * [ICMDB Sentiment dataset](https://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz)
+  * Pathfinding [maps](https://movingai.com/benchmarks/bgmaps/bgmaps-map.zip) and [scenarios](https://movingai.com/benchmarks/bgmaps/bgmaps-scen.zip)
+  
   
 # Setup
 
