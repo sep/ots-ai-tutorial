@@ -22,20 +22,20 @@ library". It's intentional, because it's representative of reality.
 
 # Requirements
 
-* An environment management tool for python
+* An environment management tool for [`python`](https://python.org)
   * the demo uses `venv`
-* `pip` for managing python libraries
+* [`pip`](https://pypi.org/project/pip) for managing python libraries
 * `python`, the following libraries, and their supports
-  * `matplotlib`
-  * `sklearn`
-  * `pytorch`
-  * `torchvision`
-  * `vaderSentiment`
-  * `nltk`
+  * [`matplotlib`](https://matplotlib.org/)
+  * [`sklearn`](https://scikit-learn.org/stable/)
+  * [`pytorch`](https://pytorch.org/)
+  * [`torchvision`](https://pytorch.org/vision/)
+  * [`vaderSentiment`](https://pypi.org/project/vaderSentiment/)
+  * [`nltk`](https://www.nltk.org/)
     * You'll want to run `nltk.download all` before the day of the tutorial
-  * `gymnasium`
+  * [`gymnasium`](https://gymnasium.farama.org/index.html)
     * You'll want to pip install gymnasium[classic_control] as well
-  * `pathfinding`
+  * [`pathfinding`](https://pypi.org/project/pathfinding/)
 
 * The following datasets
   * NIST digit data (included with sklearn)
