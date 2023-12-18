@@ -1,5 +1,24 @@
-# ots-ai-tutorial
-Off-the-shelf AI Tutorial (Originally Prepared for Indy.Code() 2023)
+# Off-the-shelf AI Tutorial
+
+# Notes And Goals
+
+This tutorial is meant to be a whirlwind introduction to the broad
+landscape of artificial intelligence.  Although we often talk about AI
+as a monolith, it turns out it's a large collection of techniques
+built for solving specific classes of problems.
+
+In the tutorial, we'll explore those techniques by looking at
+different off the shelf tools for their specific areas.  The goal is
+to be an inch deep and a mile wide; we want to install and use the
+tools on a small set of problems to:
+
+* get a feel for that process
+* see the breadth of the AI landscape
+* start to build a mapping from real world problems to AI techniques
+
+The tools we're using range from "published library which is really
+just part of someone's dissertation" to "well maintained open source
+library". It's intentional, because it's representative of reality.
 
 # Requirements
 
