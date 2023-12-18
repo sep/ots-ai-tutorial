@@ -1,6 +1,6 @@
 # Off-the-shelf AI Tutorial
 
-# Notes And Goals
+## Notes And Goals
 
 This tutorial is meant to be a whirlwind introduction to the broad
 landscape of artificial intelligence.  Although we often talk about AI
