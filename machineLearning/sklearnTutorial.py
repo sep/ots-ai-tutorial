@@ -117,5 +117,5 @@ if __name__ == "__main__":
     learners = [MLPClassifier()]
     trainLearners(learners, dataDict)
     results = evaluateLearners(learners, dataDict)
-    print(results[0]['accuracy'])
+    print([result['accuracy'] for result in results])
     displayExamples(results[0]['wrong'])
