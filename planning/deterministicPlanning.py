@@ -126,6 +126,21 @@ class InstanceGenerator():
             raise ValueError
         return Instance(self.map, traversal["start"], traversal["goal"], traversal["cost"])
 
+    def indexedInstance(self, index):
+        traversal = self.traversalDicts[index]
+        if not (traversal['width'] == self.map.width and traversal['height'] == self.map.height):
+            print("Instance dimmensions {} x {} do not match map dimmensions {} x {}".format(
+                traversal['width'], traversal['height'], self.map.width, self.map.height)
+            )
+            raise ValueError
+        return Instance(self.map, traversal["start"], traversal["goal"], traversal["cost"])
+
+    def firstInstance(self):
+        return self.indexedInstance(0)
+
+    def lastInstance(self):
+        return self.indexedInstance(-1)
+
     @staticmethod
     def mapPathOfInstancePath(instancePath):
         # In the moving AI dataset, instances are paired with maps and share names.
@@ -191,6 +206,7 @@ if __name__ == "__main__":
     # Try editing an input map
     # Try creating your own input files
     testGenerator = InstanceGenerator.load(TEST_SCEN_PATH)
+    # Also consider firstInstance, lastInstance, indexedInstance
     instance = testGenerator.randomInstance()
     time = timeit.timeit(instance.solve, number=1)
     print(str(time) + " seconds")
