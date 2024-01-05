@@ -2,10 +2,10 @@
 
 # setup the virtual environment
 python3 -m venv venv
+source ./venv/bin/activate
 pip3 install gymnasium
 pip3 install gymnasium[classic_control] tqdm
 pip3 install pathfinding
-pip3 install
 
 # grab the pathfinding datasets
 mkdir data

@@ -111,7 +111,6 @@ def buildEnvAgent(
         domain, hash, renderMode=None, learningRate = 0.01,
         numEpisodes = 100_000, startEpsilon = 1.0, stopEpsilon = 0.1, futureDiscount = 0.95):
     None
-    environemnt = None
     if renderMode is None:
         environment = gym.make(domain)
     else:
