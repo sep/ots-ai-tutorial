@@ -7,7 +7,7 @@
 # Grab some standard development tools
 sudo apt-get install emacs git screen python3 python3-pip python3-venv
 # Tools for the ML tutorials
-sudo apt-get install python3-matplotlib python3-sklearn python3-pytorch python3-torchvision
+sudo apt-get install python3-matplotlib python3-scikit-learn python3-torch python3-torchvision
 # Tools for the NLP tutorials
 
 
