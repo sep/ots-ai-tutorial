@@ -1,6 +1,10 @@
 # Generated files
 data
 
+# Downloaded data
+nlp/aclImdb_v1
+planning/data
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
