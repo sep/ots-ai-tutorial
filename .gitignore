@@ -2,7 +2,7 @@
 data
 
 # Downloaded data
-nlp/aclImdb_v1
+nlp/data
 planning/data
 
 # Byte-compiled / optimized / DLL files
