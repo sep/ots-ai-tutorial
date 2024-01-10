@@ -35,7 +35,7 @@ def getInstanceList(instanceRoot):
 
 # This takes a path, reads in the text, and provides a valence score on every word in the text
 def getTextScores(path, analyzer=DEFAULT_VADER):
-    text = Path(path).read_text()
+    text = Path(path).read_text(encoding="utf8")
     # NLTK has tons of useful tools for natural language processing.
     # Splitting text up into sentences is the tip of the iceberg
     sentences = tokenize.sent_tokenize(text)
