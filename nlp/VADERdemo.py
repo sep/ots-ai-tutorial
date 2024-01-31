@@ -1,7 +1,6 @@
 # Reproduces and extends the demo code packaged with VaderSentmiment
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from nltk import tokenize
-import json
 import random
 
 # Spins up your sentiment analyzer
@@ -22,7 +21,7 @@ def exercise1a():
     print("\t")
 
 def exercise1b():
-    # - These are some positive examples
+    # - These are some negative examples
     conceptList = ["riot", "fire", "fight", "blood", "mob", "war", "police", "tear gas"]
     conceptSentiments = 0.0
     for concept in conceptList:
@@ -143,7 +142,9 @@ def exercise2c():
 def exercise3a():
     # - VADER works best when analysis is done at the sentence level
     # - (but it can work on single words or entire novels).
-    paragraph = "It was one of the worst movies I've seen, despite good reviews. Unbelievably bad acting!! Poor direction. VERY poor production. The movie was bad. Very bad movie. VERY BAD movie!"
+    paragraph = "It was one of the worst movies I've seen, despite good reviews. \
+        Unbelievably bad acting!! Poor direction. VERY poor production. \
+        The movie was bad. Very bad movie. VERY BAD movie!"
     # -- For example, given the above paragraph text from a hypothetical movie review
     # -- You could use NLTK to break the paragraph into sentence
     # -- tokens for VADER, then average the results for the paragraph
@@ -161,7 +162,9 @@ def exercise3a():
 def exercise3b():
     # You may have noticed that the aggregation in VADER isn't order-aware.
     # Do you think that's a problem?
-    paragraph = "It was one of the worst movies I've seen, despite good reviews. Unbelievably bad acting!! Poor direction. VERY poor production. The movie was bad. Very bad movie. VERY BAD movie!"
+    paragraph = "It was one of the worst movies I've seen, despite good reviews. \
+        Unbelievably bad acting!! Poor direction. VERY poor production. \
+        The movie was bad. Very bad movie. VERY BAD movie!"
     sentence_list = tokenize.sent_tokenize(paragraph)
     for iteration in range(10):
         paragraphSentiments = 0.0
@@ -183,10 +186,11 @@ def scoreSequence(valences):
         
 def exercise3c():
     # Consider Implementing an aggregation technique which is sentence order specific
-    paragraph = "It was one of the worst movies I've seen, despite good reviews. Unbelievably bad acting!! Poor direction. VERY poor production. The movie was bad. Very bad movie. VERY BAD movie!"
+    paragraph = "It was one of the worst movies I've seen, despite good reviews. \
+        Unbelievably bad acting!! Poor direction. VERY poor production. \
+        The movie was bad. Very bad movie. VERY BAD movie!"
     sentence_list = tokenize.sent_tokenize(paragraph)
     for iteration in range(10):
-        paragraphSentiments = 0.0
         random.shuffle(sentence_list)
         scores = map(analyzer.polarity_scores, sentence_list)
         vs = scoreSequence(scores)
