@@ -129,7 +129,7 @@ def buildEnvAgent(
         environment = gym.make(domain, render_mode=renderMode)
     visEnv = gym.make(domain, render_mode='human')
     decay = startEpsilon / (numEpisodes / 2)  # reduce the exploration over time
-    env = gym.wrappers.RecordEpisodeStatistics(environment, deque_size=numEpisodes)
+    env = gym.wrappers.RecordEpisodeStatistics(environment)#, deque_size=numEpisodes)
     agent = QLearningAgent(
         environment = env,
         hash = hash,

@@ -1,2 +1,3 @@
 vaderSentiment
 nltk
+scikit-learn
