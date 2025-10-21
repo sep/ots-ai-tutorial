@@ -138,7 +138,6 @@ def computeAccuracy(resultsDict):
 # Using VADER sentiment analysis and simple sentiment scores
 def bareVADER():
     testPaths = getInstanceList(testDataDir)
-    trainPaths = getInstanceList(trainDataDir)
     predictions = analyzeInstances(testPaths)
     accuracy = computeAccuracy(predictions)
     print(accuracy)
@@ -212,7 +211,7 @@ def sklearnUsingVADER():
 
 if __name__ == "__main__":
     # TODO: Split up into multiple assignment branches
-    # 1. Just the vader stuf
+    # 1. Just the vader stuff
     # 2. The Vader Stuff filled in and the ML branch
     bareVADER()
     sklearnUsingVADER()
